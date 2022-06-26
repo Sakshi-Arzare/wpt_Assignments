@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.js"
+  ></script>
+  <script>
+    $(()=>{
+        console.log("dom content loaded");
+        $("#pinno").blur(()=>{
+            console.log("blue event occured");
+            let y =$("#pinno").val();
+            
+            let ajaxparams={
+            data:{ x:y},
+            url: "http://localhost:500/getArea",
+            type:'get',
+            dataType: "json",
+            success:(output)=>{ 
+
+        if(output.pinnofoundstatus)
+        {
+            //$("#msg").text("Area details found");
+
+            $("#area").val(output.areadetails.areaname);
+
+            /*ocument.querySelector("#itemname").value=
+            output.itemdetails.itemname;*/
+
+
+        }
+        else{
+            $("#message").text("area details not found");
+            $("#area").val(" ");
+       
+}
+
+
+},
+error:(error)=>{ console.log("failure " + error)}
+
+};//end of the object creation for ajaxparams
+$.ajax(ajaxparams);
+
+
+
+        })
+        $("#btn1").click(
+	()=>{
+  
+ 
+  
+  let input={x:$("#pinno").val(),
+  y:$("#area").val()};
+
+  let ajaxparams={
+  data:input,
+  url: "http://localhost:500/addArea",
+  type:'get',
+  dataType: "json",
+  success:(output)=>{ 
+
+
+    if(output)
+  {
+  //message.innerText="added successfully";
+  $("#message").text("added succesfully");
+   
+  
+  }
+  else
+  
+  {
+ $("#message").text("could not add item");
+  
+  }
+
+  
+  
+  
+$("#area").val("");
+
+
+
+	showContents();
+
+  
+	
+	
+
+
+
+
+
+  },
+  error:(errr)=>{ console.log("failure" + errr);}
+  };
+  $.ajax(ajaxparams);
+
+  //doing ajax call focus only two things
+  //pass input correctly and see what server is giving us that's all.
+
+  
+  
+ // let output=addItem(input);//kids world
+ 
+
+  
+
+
+}); //end of add event
+
+$("#btn2").click(()=>{
+
+//hard thing begins
+let input ={pincode:$("#pinno").val(),
+  areaname:$("#area").val()};
+  
+  
+  let ajaxparams={
+    
+  data:input,
+  url: "http://localhost:500/updateitem",
+  type:'get',
+  dataType: "json",
+  success:(output)=>{
+
+    //only after you got data from the server, update the ui
+    if(output)
+  {
+  $("#message").text("updated successfully");
+  
+  
+  }
+  else
+  
+  {
+  
+    $("#message").text("could not update item");
+  
+  
+  }
+  $("#area").val("");
+
+
+
+  },
+  error:(mistake)=> { console.log("error " + mistake);}
+   };
+   $.ajax(ajaxparams);
+
+
+
+
+
+  
+ 
+
+});
+
+
+
+
+
+showContents();
+
+
+
+    });
+  </script>
+</head>
+<body>
+    <h1>show details of area and pin number</h1>
+    <input type="text" id="pinno" placeholder="pin number"/>
+    <input type="text" id="area" placeholder="Area"/>
+    <!-- <span id="area"> Area here</span> -->
+    <Br/>
+    <br/>
+    <button id="btn1">add pinno</button>
+    <button id="btn2">updaet pinno</button>
+    <BR/>
+    <br/>
+    <p id="message">details here</p>
+</body>
+</html>

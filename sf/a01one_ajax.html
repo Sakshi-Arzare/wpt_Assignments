@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $(()=>{
+            console.log("optimistic people will be in hell");
+
+            $("#loginbutton").click(()=>{
+                let input={ username:'a',password:'b'};
+                let parametertothefunction =
+                {   data:input,
+                    url:"http://localhost:900/login",
+                    type:'get',
+                    dataType:"text",
+                    success:(data)=>{console.log("data given by server in success" +data)},
+                    error:(data)=>{console.log("failed to contact server" +data);}
+                };
+                $.ajax(parametertothefunction);
+            
+                
+                console.log("button is clicked");
+            });
+        });
+
+    </script>
+</head>
+<body>
+    <h1> this is the h1</h1>
+    
+        <Br/><input type="text" name="username" placeholder="username"/>
+        <Br/><input type="text" name="password" placeholder="password"/>
+        <button id="loginbutton">check</button>
+        <p id="message"> what happened to login</p>
+    
+</body>
+</html>

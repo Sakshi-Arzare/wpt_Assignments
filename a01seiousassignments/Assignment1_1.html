@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script>
+            var arr = [11,55,77,22,33,44,99,100];
+            console.log(arr);
+
+            window.addEventListener('DOMContentLoaded', ()=>{
+
+
+
+                function vieAll(){
+	                        let contents = "";
+		                    for(let i=0; i < arr.length; i++){
+                                        contents += " " + arr[i];
+                            }
+                            return contents;
+                        };
+
+                        function oddPositon()
+                        {
+                            let contents = "";
+                            for(let i=0; i < arr.length; i++)
+                            {
+                                if( i%2 != 0)
+                                    contents += " " + arr[i];
+                            }
+                            return contents;
+                        }
+
+                const c1 = document.querySelector("#number");
+                c1.addEventListener('blur',()=>{
+                    console.log("blur event");
+
+                    let num=document.querySelector("#number").value;
+                    console.log(num);
+                    
+                    // let decider = false;
+                    const found = arr.find(element => element == num);
+                    // for (let index = 0; index < arr.length; index++) {
+                    //     if (num == arr[index]) {
+                    //         console.log(arr[index]);
+                    //         decider = true;
+                    //     }
+                    // };
+                    console.log(found);
+                    if(found){
+                        document.querySelector("#message").innerText="Number Found";
+                        document.querySelector("#edit").disabled = false;
+                        document.querySelector("#delete").disabled = false;
+                        let editbtn = document.querySelector("#edit");
+                        editbtn.addEventListener('click',()=>{
+                            let promtnum = prompt("Enter number to replace",44);
+                            const check = arr.find(element => element == num);
+                            if(check){
+                                console.log(num); 
+                                for (let i = 0; i < arr.length; i++) {
+                                    if(arr[i]==num){
+                                        arr[i]=promtnum;
+                                    }
+                                }
+                                console.log(arr);
+                            }
+
+                        })
+
+                        let deletbtn = document.querySelector("#delete");
+                        deletbtn.addEventListener('click',()=>{
+
+                            console.log(num);
+                            console.log(arr.indexOf(parseInt(num))); 
+                            const index2 = arr.indexOf(parseInt(num));
+                            
+                            arr.splice(parseInt(index2),1);
+                            console.log(arr);
+                        
+                        })
+
+                    }
+                    else{
+                        document.querySelector("#message").innerText="Number Not Found";
+                        document.querySelector("#add").disabled = false;
+                        document.querySelector("#edit").disabled = true;
+                        document.querySelector("#delete").disabled = true;
+
+                        let eve = document.querySelector("#add");
+                        eve.addEventListener('click',()=>{
+                            arr.push(num)
+                            console.log(arr);
+                        });
+                        
+
+                    }
+                });
+
+
+                    const viewwall =document.querySelector("#view");
+                    viewall.addEventListener('click',()=>{
+                        console.log("view all event handling");
+                        let output=vieAll();
+
+                        document.querySelector("#message2").innerText=output;
+
+                    });
+
+
+                    const viewoddposition =document.querySelector("#showodd");
+                        viewoddposition.addEventListener('click',()=>{
+                        console.log("view odd position event handling");
+                        let output=oddPositon();
+
+                        document.querySelector("#message2").innerText=output;
+
+                    });
+            });
+
+        </script>
+    </head>
+    <body>
+        <br>
+        <input type="text" id="number" placeholder="Enter number"><span id="message">  result</span>
+        <br>
+        <br/>
+        <button disabled id="add">add</button>
+        <button disabled id="edit">edit</button>
+        <button disabled id="delete">delete</button>
+        <button  id="view">view all</button>
+        <button  id="showodd">show odd position</button><br>
+        <span id="message2"></span>
+    </body>
+</html>
